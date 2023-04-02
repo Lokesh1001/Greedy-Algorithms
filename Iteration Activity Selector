@@ -1,0 +1,40 @@
+#include<iostream>
+using namespace std;
+int main(){
+    int n;
+    cin>>n;
+    string names[n];
+    int start[n],end[n];
+    
+    for(int i=0;i<n;i++){
+        cin>>names[i]>>start[i]>>end[i];
+    }
+    
+    // sort
+    for(int i=0;i<n;i++){
+        for(int j=i;j<n-1-i;j++){
+            if(end[j]>end[j+1]){
+                int temp;
+                string stemp;
+                temp=end[j+1];
+                end[j+1]=end[j];
+                end[j]=temp;
+                temp=start[j+1];
+                start[j+1]=start[j];
+                start[j]=temp;
+                stemp=names[j];
+                names[j]=names[j+1];
+                names[j+1]=stemp;
+            }
+        }
+    }
+    
+    
+    int curr_time=0,
+    for(int i=0;i<n;i++){
+        if(curr_time<=end[i] && start[i]>=curr_time){
+            cout<<names[i]<<" ";
+            curr_time=end[i];
+        }
+    }
+}
