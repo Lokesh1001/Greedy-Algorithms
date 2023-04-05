@@ -1,0 +1,61 @@
+#include <iostream>
+#include <algorithm>
+#include <queue>
+using namespace std;
+
+string names[100];
+int no=1;
+struct Activity {
+    string name;
+    int start;
+    int end;
+};
+
+// Comparison function for the priority queue based on start time
+struct CompareStartTime {
+    bool operator()(Activity const& a1, Activity const& a2) {
+        return a1.start < a2.start;
+    }
+};
+
+priority_queue<Activity, vector<Activity>, CompareStartTime> pq;
+int curr_time;
+void set_activities(Activity activities[],int n){    
+    for (int i = 0; i < n; i++) {
+        pq.push(activities[i]);
+    }
+    names[0]=pq.top().name;
+    curr_time=pq.top().start;
+    pq.pop();
+}
+void RecursiveselectActivities(int n) {
+    if(!pq.empty()){
+        Activity curr_activity = pq.top();
+        pq.pop();
+    if(curr_activity.end<=curr_time){
+        //cout<<"hi";
+    names[no]=curr_activity.name;
+    curr_time=curr_activity.start;
+    no++;
+    }
+    RecursiveselectActivities(n);
+    }
+}
+
+void print(){
+    for(int i=no;i>-1;i--)
+    cout<<names[i]<<" ";
+}
+
+int main() {
+    int n;
+    cin >> n;
+    Activity activities[n];
+    for (int i = 0; i < n; i++) {
+        cin >> activities[i].name >> activities[i].start >> activities[i].end;
+    }
+    set_activities(activities,n);
+    RecursiveselectActivities(n);
+    print();
+    return 0;
+}
